@@ -5,7 +5,8 @@ class Board extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            squares: Array(9).fill(null)
+            squares: Array(9).fill(null),
+            xIsNext: true
         }
     }
     
@@ -15,11 +16,18 @@ class Board extends React.Component {
         value={this.state.squares[i]}
         //we are passing down the handleClick
         onClick={() => this.handleClick(i)}
-        />;
+        />
     }
 
     handleClick(i){
-        alert(i)
+        const squares = this.state.squares.slice()
+
+        squares[i] = this.state.xIsNext === true ? 'X' : 'O'
+        //we should not mutate state directly but use .setState() method instead
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext
+        })
     }
 
     render() {
